@@ -1,14 +1,15 @@
 <?php
 
 $getRoutes = [
-    "/" => "./views/home.php",
-    "/login" => "./views/login.php",
-    "/signup" => "./views/signup.php",
+    "/" => "./src/views/home.php",
+    "/login" => "./src/views/login.php",
+    "/signup" => "./src/views/signup.php",
+    "/usr/dashboard" => "./src/views/dashboard.php"
 ];
 
 $postRoutes = [
-    "/login" => "./formhandlers/loginhandler.php",
-    "/signup" => "./formhandlers/signuphandler.php"
+    "/login" => "./src/formhandlers/loginhandler.php",
+    "/signup" => "./src/formhandlers/signuphandler.php"
 ];
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];

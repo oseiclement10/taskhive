@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Controllers;
+use App\Models\User;
+
 class UserController extends User
 {
 
@@ -9,6 +12,7 @@ class UserController extends User
 
     public function __construct($email, $password, $password_confirmation)
     {
+        parent::__construct();
         $this->email = $email;
         $this->password = $password;
         $this->password_confirmation = $password_confirmation;
@@ -18,13 +22,15 @@ class UserController extends User
     {
         $errors = $this->validateRegisterCreds();
         if (count($errors) > 0) {
+            echo "validation error : <br/>";
+            var_dump($errors);
             //handle validation error,
         } else {
             $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
-
+          
             if ($this->saveNewUser($this->email, $hashedPassword)) {
                 //handle registration success
-            }else{
+            } else {
                 //handle registration error,
             };
         }
@@ -33,16 +39,17 @@ class UserController extends User
     public function loginUser()
     {
         $errors = $this->validateLoginCreds();
-        if(count($errors)>0){
+        if (count($errors) > 0) {
             //handle validation error
-        }else{
+        } else {
             $user = $this->findUserByEmail($this->email);
-            if(!$user){
+            if (!$user) {
                 //handle no user found error
-            }else{
+            } else {
                 session_start();
                 $_SESSION["uid"] = $user["id"];
                 $_SESSION["email"] = $user["email"];
+                header("Location: ./usr/dashboard");
             }
         }
     }
@@ -51,9 +58,7 @@ class UserController extends User
     {
         $errors = [];
 
-        if (empty($this->email)) {
-            array_push($errors, "email is required");
-        };
+
 
         if (empty($this->password)) {
             array_push($errors, "password is required");
@@ -67,7 +72,7 @@ class UserController extends User
             array_push($errors, "Passwords do not match");
         }
 
-        if (filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             array_push($errors, "Email provided is not a valid email");
         }
 
@@ -96,4 +101,5 @@ class UserController extends User
 
         return $errors;
     }
+
 }

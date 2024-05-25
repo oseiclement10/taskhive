@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Models;
+use PDOException;
+
+
 class Task extends DbConnection
 {
 

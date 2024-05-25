@@ -9,7 +9,7 @@ require "header.php";
             <h4 class="text-3xl text-center mb-6 mx-auto rounded-tr-3xl rounded-bl-3xl px-2 py-[2px] bg-white    text-black w-fit font-semibold">
                 Task Hive
             </h4>
-            <form class="bg-white py-10 px-6 rounded-2xl" method="POST" action="./login">
+            <form class="bg-white py-10 px-10 rounded-2xl" method="POST" action="./login">
                 <h2 class="text-3xl font-semibold text-center mb-8">Sign in to your account</h2>
                 <label class="block font-semibold text-slate-700 mb-2">Your email</label>
                 <input class="bg-slate-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" placeholder="enter email" name="email" />
