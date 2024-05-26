@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 $pageTitle = "Sign Up | TaskHive";
 require "header.php";
@@ -12,7 +11,7 @@ function getFormValue($valName)
 ?>
 
 <body class="font-dmsans">
-    <section class="signup-container  h-dvh flex items-center flex-col justify-center">
+    <section class="signup-container h-dvh flex items-center flex-col justify-center">
         <section class="min-w-[500px] max-w-[600px]  relative z-10 ">
             <h4 class="text-3xl text-center mb-6 mx-auto rounded-tr-3xl rounded-bl-3xl px-2 py-[2px] bg-white    text-black w-fit font-semibold">
                 Task Hive

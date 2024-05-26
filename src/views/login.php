@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 $pageTitle = "Login | TaskHive";
 require "header.php";
