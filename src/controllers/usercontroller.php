@@ -44,7 +44,7 @@ class UserController extends User
                     "password" => $this->password,
                     "password_confirmation" => $this->password_confirmation,
                 ];
-                $errorMessage = str_replace(["\r","\n"],"",$err->getMessage());
+                $errorMessage = str_replace(["\r", "\n"], "", $err->getMessage());
                 header("Location: ./signup?errors=$errorMessage");
             }
         }
@@ -54,16 +54,26 @@ class UserController extends User
     {
         $errors = $this->validateLoginCreds();
         if (count($errors) > 0) {
-            //handle validation error
+            session_start();
+            $_SESSION["loginFormValues"] = [
+                "email" => $this->email,
+                "password" => $this->password,
+            ];
+            $errorStr = implode("_", $errors);
+            header("Location: ./login?errors=$errorStr");
         } else {
             $user = $this->findUserByEmail($this->email);
             if (!$user) {
-                //handle no user found error
+                header("Location: ./login?errors=invalid credentials");
             } else {
-                session_start();
-                $_SESSION["uid"] = $user["id"];
-                $_SESSION["email"] = $user["email"];
-                header("Location: ./usr/dashboard");
+                if (password_verify($this->password, $user["password"])) {
+                    session_start();
+                    $_SESSION["uid"] = $user["id"];
+                    $_SESSION["email"] = $user["email"];
+                    header("Location: ./usr/dashboard");
+                } else {
+                    header("Location: ./login?errors=invalid credentials");
+                }
             }
         }
     }
@@ -105,7 +115,7 @@ class UserController extends User
             array_push($errors, "email is required");
         };
 
-        if (filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             array_push($errors, "Email provided is not a valid email");
         }
 

@@ -6,8 +6,7 @@ require "header.php";
 
 function getFormValue($valName)
 {
-    return $_SESSION["regisFormValues"]["$valName"] ?? "";
-   
+    return isset($_GET["errors"]) ? $_SESSION["regisFormValues"]["$valName"] ?? "" : "";
 }
 
 ?>
@@ -31,7 +30,6 @@ function getFormValue($valName)
                         }
                     }
                     ?>
-
                 </div>
 
                 <label class="block font-semibold text-slate-700 mb-2">Your email</label>

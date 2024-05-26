@@ -16,5 +16,5 @@ if (isset($_POST["signup"])) {
     $userController = new UserController($email, $password, $confirm_password);
     $userController->registerUser();
 } else {
-    //handle missing fields validation error
+    header("Location: ./signup?errors=signup here");
 }
