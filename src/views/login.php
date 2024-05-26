@@ -16,7 +16,7 @@ function getFormValue($valName)
             <h4 class="text-3xl text-center mb-6 mx-auto rounded-tr-3xl rounded-bl-3xl px-2 py-[2px] bg-white    text-black w-fit font-semibold">
                 Task Hive
             </h4>
-            <form class="bg-white py-10 px-10 rounded-2xl" method="POST" action="./login">
+            <form class="bg-white py-10 px-10 rounded-2xl" method="POST" action="/taskhive/login">
                 <h2 class="text-3xl font-semibold text-center mb-4">Sign in to your account</h2>
                 <div class="mb-6">
                     <?php
