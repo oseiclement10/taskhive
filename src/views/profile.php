@@ -1,10 +1,10 @@
-<?php
-$pageTitle = "Dashboard | TaskHive";
+<?php 
+
+$pageTitle = "Profile | TaskHive";
 require "header.php";
 
 function getContent(){
-    require "dashboardContent.php";
+    require "profileContent.php";
 }
 
 require_once "pageLayout.php";
-

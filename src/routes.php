@@ -4,7 +4,10 @@ $getRoutes = [
     "/" => "./src/views/home.php",
     "/login" => "./src/views/login.php",
     "/signup" => "./src/views/signup.php",
-    "/usr/dashboard" => "./src/views/dashboard.php"
+    "/usr/dashboard" => "./src/views/dashboard.php",
+    "/usr/tasks"=>"./src/views/tasks.php",
+    "/usr/profile"=>"./src/views/profile.php",
+    "/usr/logout"=>"./src/views/logout.php",
 ];
 
 $postRoutes = [
