@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\User;
+use Exception;
 
 class UserController extends User
 {
@@ -22,17 +24,29 @@ class UserController extends User
     {
         $errors = $this->validateRegisterCreds();
         if (count($errors) > 0) {
-            echo "validation error : <br/>";
-            var_dump($errors);
-            //handle validation error,
+            session_start();
+            $_SESSION["regisFormValues"] = [
+                "email" => $this->email,
+                "password" => $this->password,
+                "password_confirmation" => $this->password_confirmation,
+            ];
+            $errorStr = implode("_", $errors);
+            header("Location: ./signup?errors=$errorStr");
         } else {
             $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
-          
-            if ($this->saveNewUser($this->email, $hashedPassword)) {
-                //handle registration success
-            } else {
-                //handle registration error,
-            };
+            try {
+                $this->saveNewUser($this->email, $hashedPassword);
+                header("Location: ./login");
+            } catch (Exception $err) {
+                session_start();
+                $_SESSION["regisFormValues"] = [
+                    "email" => $this->email,
+                    "password" => $this->password,
+                    "password_confirmation" => $this->password_confirmation,
+                ];
+                $errorMessage = str_replace(["\r","\n"],"",$err->getMessage());
+                header("Location: ./signup?errors=$errorMessage");
+            }
         }
     }
 
@@ -101,5 +115,4 @@ class UserController extends User
 
         return $errors;
     }
-
 }

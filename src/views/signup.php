@@ -1,25 +1,46 @@
 <?php
+session_start();
+
 $pageTitle = "Sign Up | TaskHive";
 require "header.php";
+
+function getFormValue($valName)
+{
+    return $_SESSION["regisFormValues"]["$valName"] ?? "";
+   
+}
+
 ?>
 
 <body class="font-dmsans">
     <section class="signup-container  h-dvh flex items-center flex-col justify-center">
-        <section class="min-w-[500px]  relative z-10 ">
+        <section class="min-w-[500px] max-w-[600px]  relative z-10 ">
             <h4 class="text-3xl text-center mb-6 mx-auto rounded-tr-3xl rounded-bl-3xl px-2 py-[2px] bg-white    text-black w-fit font-semibold">
                 Task Hive
             </h4>
             <form class="bg-white py-10 px-10 rounded-2xl" method="POST" action="./signup">
 
-                <h2 class="text-3xl font-semibold text-center mb-8">Create An Account</h2>
+                <h2 class="text-3xl font-semibold text-center mb-4">Create An Account</h2>
+
+                <div class="mb-6">
+                    <?php
+                    if (isset($_GET["errors"])) {
+                        $errorsArr = explode("_", $_GET["errors"]);
+                        foreach ($errorsArr as $error) {
+                            echo "<p class='bg-red-100 text-red-500 py-1 px-2 my-2 rounded-md'> $error </p>";
+                        }
+                    }
+                    ?>
+
+                </div>
 
                 <label class="block font-semibold text-slate-700 mb-2">Your email</label>
-                <input required type="email" class="bg-slate-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" placeholder="enter email" name="email" />
+                <input required type="email" class="bg-slate-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" placeholder="enter email" name="email" value="<?php echo getFormValue("email") ?>" />
 
 
                 <label class="block font-semibold text-slate-700 mb-2">Password</label>
                 <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-4">
-                    <input required id="password" type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="password" class="block" />
+                    <input required id="password" type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="password" class="block" value="<?php echo getFormValue("password") ?>" />
                     <button class="px-2" type="button" id="showpassword">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
@@ -37,7 +58,7 @@ require "header.php";
 
                 <label class="block font-semibold text-slate-700 mb-2">Confirm Password</label>
                 <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-8">
-                    <input id="confirmpassword" required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="confirmpassword" class="block" />
+                    <input id="confirmpassword" required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="password_confirmation" class="block" value="<?php echo getFormValue("password_confirmation") ?>" />
                     <button class="px-2" type="button" id="showpassword2">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
