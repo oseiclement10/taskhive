@@ -1,27 +1,17 @@
 <?php
 
-use App\Models\Task;
+namespace App\Controllers;
 
+use App\Models\Task;
+use Exception;
+
+const TASKFORMROUTE = "/taskhive/usr/tasks/new";
 class TaskController extends Task
 {
 
-    private $title;
-    private $description;
-    private $priority;
-    private $start_datetime;
-    private $due_datetime;
-    private $category;
-    private $status;
-
     public function __construct($params)
     {
-        $this->title = $params["title"];
-        $this->description = $params["description"];
-        $this->priority = $params["priority"];
-        $this->start_datetime = $params["start_datetime"];
-        $this->due_datetime = $params["due_datetime"];
-        $this->category = $params["category"];
-        $this->status = $params["status"];
+        parent::__construct($params);
     }
 
     protected function validateFields()
@@ -52,7 +42,7 @@ class TaskController extends Task
         return $errors;
     }
 
-    protected function save()
+    public function save()
     {
         $errors = $this->validateFields();
         if (count($errors) > 0) {
@@ -66,14 +56,14 @@ class TaskController extends Task
                 "status" => $this->status,
             ];
             $errorStr = implode("_", $errors);
-            header("Location: ./tasks?errors=$errorStr");
+            header("Location: " . TASKFORMROUTE . "$?errors=$errorStr");
         } else {
             try {
-                $this->createNewTask($this);
-                header("Location: ./tasks?success=success");
+                $this->createNewTask(get_object_vars($this));
+                header("Location: " . TASKFORMROUTE . "success=success");
             } catch (Exception $e) {
                 $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
-                header("Location: ./tasks?errors=$errorMessage");
+                header("Location: " . TASKFORMROUTE . "?errors=$errorMessage");
             }
         }
     }

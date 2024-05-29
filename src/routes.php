@@ -20,11 +20,13 @@ $protectedGetRoutes = [
 ];
 
 $publicPostRoutes = [
-    "/login" => FORM_HANDLERS_DIR . "loginhandler.php",
-    "/signup" => FORM_HANDLERS_DIR . "signuphandler.php"
+    "/login" => FORM_HANDLERS_DIR ."loginhandler.php",
+    "/signup" => FORM_HANDLERS_DIR ."signuphandler.php"
 ];
 
-$protectedPostRoutes = [];
+$protectedPostRoutes = [
+    "/usr/tasks/new" => FORM_HANDLERS_DIR."taskhandler.php"
+];
 
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
@@ -40,10 +42,10 @@ if (str_contains($path, "usr")) {
 function handleNotFound($isProtected)
 {
     if ($isProtected) {
-        require VIEWS_DIR."u_404.php";
+        require VIEWS_DIR . "u_404.php";
         return;
     } else {
-        require VIEWS_DIR."404.php";
+        require VIEWS_DIR . "404.php";
     }
 }
 
