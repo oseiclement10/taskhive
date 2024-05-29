@@ -5,7 +5,8 @@ module.exports = {
     extend: {
       fontFamily : {
         dmsans: ["DM Sans", "sans-serif"],
-      }
+      },
+     
     },
   },
   plugins: [],

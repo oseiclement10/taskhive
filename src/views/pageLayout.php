@@ -2,7 +2,8 @@
 function matchesUrlEndPath($endPath)
 {
     $url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-    return substr($url, -strlen($endPath)) == $endPath;
+    // return substr($url, -strlen($endPath)) == $endPath;
+    return str_contains($url,$endPath);
 }
 ?>
 
@@ -51,7 +52,7 @@ function matchesUrlEndPath($endPath)
             </div>
         </header>
 
-        <section class="w-[97%] mx-auto py-4 px-2">
+        <section class="w-[97%] mx-auto p-10  bg-white/70 rounded-tr-3xl rounded-tl-3xl min-h-full">
             <?php echo getContent();  ?>
         </section>
     </main>

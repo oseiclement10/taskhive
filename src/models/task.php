@@ -1,12 +1,19 @@
 <?php
 
 namespace App\Models;
+
 use PDOException;
 
 
 class Task extends DbConnection
 {
 
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     protected function getAllUserTasks($uid)
     {
@@ -40,5 +47,8 @@ class Task extends DbConnection
             error_log("Error fetching user tasks" . $err->getMessage());
             return;
         }
+    }
+    protected function createNewTask($properties)
+    {
     }
 }
