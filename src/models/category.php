@@ -31,4 +31,17 @@ class Category  extends DbConnection
             throw new PDOException("Error fetching categories");
         }
     }
+
+    public static function fetchUserCategoryByCategoryId($categoryId)
+    {
+        $query = "SELECT * FROM categories where user_id = ? and id = ?";
+
+        $conn = self::connect()->prepare($query);
+
+        if ($conn->execute([$_SESSION["uid"], $categoryId])) {
+            return $conn->fetch();
+        } else {
+            throw new PDOException("Error fetching categories");
+        }
+    }
 }

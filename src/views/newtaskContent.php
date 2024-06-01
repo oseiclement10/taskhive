@@ -19,8 +19,10 @@ $categories = CategoryController::fetchUserCategories();
         if (isset($_GET["errors"])) {
             $errorsArr = explode("_", $_GET["errors"]);
             foreach ($errorsArr as $error) {
-                echo "<p class='bg-red-100 text-red-500 py-1 px-2 my-2 rounded-md'> $error </p>";
+                echo "<p  class='notif bg-red-100 text-red-500 py-1 px-2 my-2 rounded-md'> $error </p>";
             }
+        } else if (isset($_GET["success"])) {
+            echo "<p  class='notif bg-emerald-100 py-2 px-4 my-2 rounded-md text-green-600 lg:w-1/2'> Added Task Successfully </p>";
         }
         ?>
     </div>
@@ -65,5 +67,10 @@ $categories = CategoryController::fetchUserCategories();
             <input type="button" value="Cancel" name="cancle" class="text-amber-500 bg-white border-[1px] border-amber-300 px-4 py-2 rounded-md hover:opacity-70 active:opacity-30" />
         </div>
     </form>
-
+    <script>
+        const notificationsTags = document.getElementsByClassName('notif');
+        setTimeout(() => {
+            Array.from(notificationsTags).forEach(elem => elem.classList.add("hidden"));
+        }, 5000)
+    </script>
 </section>

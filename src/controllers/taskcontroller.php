@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Task;
+
 use Exception;
 
 const TASKFORMROUTE = "/taskhive/usr/tasks/new";
@@ -42,7 +43,7 @@ class TaskController extends Task
         return $errors;
     }
 
-    public function save()
+    public function saveNew()
     {
         $errors = $this->validateFields();
         if (count($errors) > 0) {
@@ -60,7 +61,7 @@ class TaskController extends Task
         } else {
             try {
                 $this->createNewTask(get_object_vars($this));
-                header("Location: " . TASKFORMROUTE . "success=success");
+                header("Location: " . TASKFORMROUTE . "?success=success");
             } catch (Exception $e) {
                 $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
                 header("Location: " . TASKFORMROUTE . "?errors=$errorMessage");

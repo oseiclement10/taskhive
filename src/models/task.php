@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use PDOException;
+use App\Models\Category;
 
 
 class Task extends DbConnection
@@ -28,14 +29,19 @@ class Task extends DbConnection
         $this->status = $params["status"];
     }
 
-    protected function getAllUserTasks()
+    public static function getAllUserTasks()
     {
         $query = "SELECT * FROM tasks where user_id = ? ";
         try {
             $fetchUserTasks = self::connect()->prepare($query);
 
-            if ($fetchUserTasks->execute([$this->uid])) {
-                return $fetchUserTasks->fetchAll();
+            if ($fetchUserTasks->execute([$_SESSION["uid"]])) {
+                return array_map(function($elem){
+                    $category = Category::fetchUserCategoryByCategoryId($elem["category_id"]);
+                    $elem["category"] = $category["name"];
+                    return $elem;
+                },$fetchUserTasks->fetchAll());
+
             } else {
                 throw new PDOException("Error fetching taskss");
             }
@@ -45,12 +51,12 @@ class Task extends DbConnection
         }
     }
 
-    protected function getUserTaskById($taskId)
+    public static function getUserTaskById($taskId)
     {
         $query = "SELECT * FROM tasks where user_id = ? AND task_id = ? ";
         $fetchUserTasks = self::connect()->prepare($query);
 
-        if ($fetchUserTasks->execute([$this->uid, $taskId])) {
+        if ($fetchUserTasks->execute([$_SESSION["uid"], $taskId])) {
             return $fetchUserTasks->fetch();
         } else {
             throw new PDOException("Error fetching user tasks");
@@ -58,7 +64,7 @@ class Task extends DbConnection
     }
     protected function createNewTask()
     {
-        $query = "INSERT INTO tasks (title,user_id,description,start_datetime,due_datetime,category_id,status) values (?,?,?,?,?,?,?)";
+        $query = "INSERT INTO tasks (title,user_id,description,start_datetime,due_datetime,category_id,priority,status) values (?,?,?,?,?,?,?,?)";
         $connector = self::connect()->prepare($query);
         return $connector->execute([
             $this->title,
@@ -67,7 +73,9 @@ class Task extends DbConnection
             $this->start_datetime,
             $this->due_datetime,
             $this->category,
+            $this->priority,
             "Pending",
+           
         ]);
     }
 }

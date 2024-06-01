@@ -8,7 +8,7 @@ if (isset($_SESSION["taskFormValues"])) {
 
 if (isset($_POST["save-task"])) {
     $taskController = new TaskController($_POST);
-    $taskController->save();
+    $taskController->saveNew();
 } else {
     header("Location: ./task/newtask?errors=create new task here");
 }
