@@ -53,7 +53,7 @@ class Task extends DbConnection
 
     public static function getUserTaskById($taskId)
     {
-        $query = "SELECT * FROM tasks where user_id = ? AND task_id = ? ";
+        $query = "SELECT * FROM tasks where user_id = ? AND id = ? ";
         $fetchUserTasks = self::connect()->prepare($query);
 
         if ($fetchUserTasks->execute([$_SESSION["uid"], $taskId])) {
