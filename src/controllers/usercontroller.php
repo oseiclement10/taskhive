@@ -8,16 +8,9 @@ use Exception;
 class UserController extends User
 {
 
-    private $email;
-    private $password;
-    private $password_confirmation;
-
     public function __construct($email, $password, $password_confirmation)
     {
-        parent::__construct();
-        $this->email = $email;
-        $this->password = $password;
-        $this->password_confirmation = $password_confirmation;
+        parent::__construct($email, $password, $password_confirmation);
     }
 
     public function registerUser()

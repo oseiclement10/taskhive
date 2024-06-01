@@ -7,29 +7,17 @@ use PDOException;
 
 require "./loadenv.php";
 
-
 class DbConnection
 {
-
-    private $dbHost;
-    private $dbName;
-    private $dbPwd;
-    private $dbUser;
-
-    public function __construct()
+    public static function connect()
     {
-        $this->dbHost = $_ENV['DB_HOST'];
-        $this->dbName = $_ENV['DB_NAME'];
-        $this->dbUser = $_ENV['DB_USER'];
-        $this->dbPwd = $_ENV['DB_PASS'];
-    }
-
-
-    protected function connect()
-    {
+        $dbHost = $_ENV["DB_HOST"];
+        $dbName = $_ENV["DB_NAME"];
+        $dbUser = $_ENV["DB_USER"];
+        $dbPwd = $_ENV["DB_PASS"];
+        $dsn = "mysql:host=" . $dbHost . ";dbname=" . $dbName;
         try {
-            $dsn = "mysql:host=" . $this->dbHost . ";dbname=" . $this->dbName;
-            $connection = new PDO($dsn, $this->dbUser, $this->dbPwd);
+            $connection = new PDO($dsn, $dbUser, $dbPwd);
             $connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $connection;

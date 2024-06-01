@@ -72,7 +72,7 @@ function getFormValue($valName)
                     </button>
                 </div>
 
-                <input type="submit" name="signup" value="Sign Up" class="w-full bg-black rounded-md text-white px-4 text-center py-2 hover:opacity-90 active:opacity-30" />
+                <input type="submit" name="signup" value="Sign Up" class="w-full cursor-pointer bg-black rounded-md text-white px-4 text-center py-2 hover:opacity-90 active:opacity-30" />
                 <p class="mt-3 text-center">Already have an account? <a href="./login" class="underline font-semibold"> log in here </a> </p>
 
             </form>

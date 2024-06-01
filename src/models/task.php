@@ -7,8 +7,6 @@ use PDOException;
 
 class Task extends DbConnection
 {
-
-
     protected $title;
     protected $description;
     protected $priority;
@@ -20,7 +18,6 @@ class Task extends DbConnection
 
     public function __construct($params)
     {
-        parent::__construct();
         $this->uid = $_SESSION["uid"];
         $this->title = $params["title"];
         $this->description = $params["description"];
@@ -35,7 +32,7 @@ class Task extends DbConnection
     {
         $query = "SELECT * FROM tasks where user_id = ? ";
         try {
-            $fetchUserTasks = $this->connect()->prepare($query);
+            $fetchUserTasks = self::connect()->prepare($query);
 
             if ($fetchUserTasks->execute([$this->uid])) {
                 return $fetchUserTasks->fetchAll();
@@ -51,7 +48,7 @@ class Task extends DbConnection
     protected function getUserTaskById($taskId)
     {
         $query = "SELECT * FROM tasks where user_id = ? AND task_id = ? ";
-        $fetchUserTasks = $this->connect()->prepare($query);
+        $fetchUserTasks = self::connect()->prepare($query);
 
         if ($fetchUserTasks->execute([$this->uid, $taskId])) {
             return $fetchUserTasks->fetch();
@@ -62,7 +59,7 @@ class Task extends DbConnection
     protected function createNewTask()
     {
         $query = "INSERT INTO tasks (title,user_id,description,start_datetime,due_datetime,category_id,status) values (?,?,?,?,?,?,?)";
-        $connector = $this->connect()->prepare($query);
+        $connector = self::connect()->prepare($query);
         return $connector->execute([
             $this->title,
             $this->uid,

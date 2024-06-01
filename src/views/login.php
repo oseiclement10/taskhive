@@ -48,7 +48,7 @@ function getFormValue($valName)
                         </svg>
                     </button>
                 </div>
-                <input type="submit" name="login" value="Login" class="w-full bg-black rounded-md text-white px-4 text-center py-2 hover:opacity-90 active:opacity-30" />
+                <input type="submit" name="login" value="Login" class="w-full  cursor-pointer bg-black rounded-md text-white px-4 text-center py-2 hover:opacity-90 active:opacity-30" />
                 <p class="mt-3 text-center">Don't have an account? <a href="./signup" class="underline font-semibold"> sign up here </a> </p>
             </form>
         </section>

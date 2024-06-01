@@ -1,3 +1,11 @@
+<?php
+
+use App\Controllers\CategoryController;
+
+$categories = CategoryController::fetchUserCategories();
+
+?>
+
 <section class=" pb-8">
     <div class="flex items-center justify-between mb-4">
         <h3 class="font-semibold text-3xl text-slate-700 ">
@@ -33,9 +41,11 @@
 
         <label class="block font-semibold text-slate-700 mb-2">Task Category</label>
         <select name="category" class="bg-amber-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200">
-            <option value="work">Work/Business</option>
-            <option value="fun">Fun</option>
-            <option value="pd">Personal Development</option>
+            <?php
+            foreach ($categories as $category) {
+                echo '<option value=" ' . $category["id"] . '">' . htmlspecialchars($category["name"]) . '</option>';
+            }
+            ?>
         </select>
 
         <label class="block font-semibold text-slate-700 mb-2">Priority</label>
