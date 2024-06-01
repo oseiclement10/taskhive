@@ -67,7 +67,7 @@ function handleRoutes($requestMethod, $path, $getRoutes, $postRoutes, $isProtect
             handleNotFound($isProtected);
             return;
         }
-    } else if ($requestMethod == "POST" || $requestMethod == "PUT") {
+    } else if ($requestMethod == "POST" ) {
         if (array_key_exists($path, $postRoutes)) {
             require $postRoutes[$path];
             return;
