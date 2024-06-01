@@ -2,13 +2,12 @@
 function matchesUrlEndPath($endPath)
 {
     $url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-    // return substr($url, -strlen($endPath)) == $endPath;
     return str_contains($url,$endPath);
 }
 ?>
 
-<body class="font-dmsans grid grid-cols-6 min-h-dvh ">
-    <aside class="col-span-1 bg-white h-full px-8 pt-5 ">
+<body class="font-dmsans flex bg-slate-100">
+    <aside class="w-[250px] fixed bg-white min-h-dvh px-8 pt-5">
         <h2 class="text-3xl font-semibold mb-8"><span class="text-amber-500">T</span>ask <span class="text-amber-500">H</span>ive</h2>
         <div class="py-4 pl-2 space-y-6">
             <a href="/taskhive/usr/dashboard " class="text-lg <?php echo matchesUrlEndPath("/dashboard") ? 'text-slate-800' : 'text-gray-600'; ?>   group flex hover:text-amber-300 ">
@@ -44,7 +43,8 @@ function matchesUrlEndPath($endPath)
             </a>
         </div>
     </aside>
-    <main class="col-span-5 bg-slate-100 h-full">
+
+    <main class=" ml-[250px] w-full  min-h-dvh">
         <header class="rounded-3xl px-10 flex items-center justify-between py-4 shadow-sm bg-white w-[98%] mx-auto my-3">
             <h2 class="text-xl ">Welcome John Doe</h2>
             <div class=" text-lg text-white font-semibold w-8 h-8 bg-amber-400 text-center flex items-center justify-center rounded-full">
