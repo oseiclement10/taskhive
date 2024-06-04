@@ -36,12 +36,11 @@ class Task extends DbConnection
             $fetchUserTasks = self::connect()->prepare($query);
 
             if ($fetchUserTasks->execute([$_SESSION["uid"]])) {
-                return array_map(function($elem){
+                return array_map(function ($elem) {
                     $category = Category::fetchUserCategoryByCategoryId($elem["category_id"]);
                     $elem["category"] = $category["name"];
                     return $elem;
-                },$fetchUserTasks->fetchAll());
-
+                }, $fetchUserTasks->fetchAll());
             } else {
                 throw new PDOException("Error fetching taskss");
             }
@@ -62,6 +61,7 @@ class Task extends DbConnection
             throw new PDOException("Error fetching user tasks");
         }
     }
+
     protected function createNewTask()
     {
         $query = "INSERT INTO tasks (title,user_id,description,start_datetime,due_datetime,category_id,priority,status) values (?,?,?,?,?,?,?,?)";
@@ -75,7 +75,25 @@ class Task extends DbConnection
             $this->category,
             $this->priority,
             "Pending",
-           
+        ]);
+    }
+
+    protected function updateTaskDetails($taskId)
+    {
+
+        $query = "UPDATE tasks set title = ?, description = ?, start_datetime = ?, due_datetime = ?, category_id = ?, priority = ? where id = ? ";
+
+
+        $connector = self::connect()->prepare($query);
+
+        return $connector->execute([
+            $this->title,
+            $this->description,
+            $this->start_datetime,
+            $this->due_datetime,
+            $this->category,
+            $this->priority,
+            $taskId,
         ]);
     }
 }

@@ -17,7 +17,7 @@ if (isset($_POST["save-task"])) {
 
     if ($_POST["form_mode"] == "edit") {
         $taskController = new TaskController($_POST);
-        $taskController->saveNew();
+        $taskController->updateTask($_POST["task_id"]);
         return;
     }
 

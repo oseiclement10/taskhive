@@ -60,11 +60,37 @@ class TaskController extends Task
             header("Location: " . TASKFORMROUTE . "$?errors=$errorStr");
         } else {
             try {
-                $this->createNewTask(get_object_vars($this));
-                header("Location: " . TASKFORMROUTE . "?success=success");
+                $this->createNewTask();
+                header("Location: " . TASKFORMROUTE . "?success=Added Task Successfully");
             } catch (Exception $e) {
                 $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
                 header("Location: " . TASKFORMROUTE . "?errors=$errorMessage");
+            }
+        }
+    }
+
+    public function updateTask($taskId)
+    {
+        $errors = $this->validateFields();
+        if (count($errors) > 0) {
+            $_SESSION["taskFormValues"] = [
+                "title" => $this->title,
+                "description" => $this->description,
+                "priority" => $this->priority,
+                "start_datetime" => $this->start_datetime,
+                "due_datetime" => $this->due_datetime,
+                "category" => $this->category,
+                "status" => $this->status,
+            ];
+            $errorStr = implode("_", $errors);
+            header("Location: " . TASKFORMROUTE . "$?errors=$errorStr");
+        } else {
+            try {
+                $this->updateTaskDetails($taskId);
+                header("Location: " . TASKFORMROUTE . "?mode=edit&id=$taskId&success=Updated task successfully");
+            } catch (Exception $e) {
+                $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
+                header("Location: " . TASKFORMROUTE . "?mode=edit&id=$taskId" . "&errors=$errorMessage");
             }
         }
     }
