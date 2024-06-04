@@ -52,6 +52,7 @@ function populateFormSelect($fieldName, $optionId, $isEditMode, $existingTask)
     </div>
 
     <form class="w-4/6" method="POST" action="/taskhive/usr/tasks/new">
+        <input type="hidden" value="" name="form_mode" value="<?php echo $isEditMode ? "edit" : "new" ?>" />
         <label class="block font-semibold text-slate-700 mb-2">Title</label>
         <input required type="text" class="bg-amber-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" placeholder="enter task title" name="title" value="<?php echo populateForm("title", $isEditMode, $existingTask) ?>" />
 
@@ -67,23 +68,21 @@ function populateFormSelect($fieldName, $optionId, $isEditMode, $existingTask)
 
         <label class="block font-semibold text-slate-700 mb-2">Task Category</label>
         <select name="category" class="bg-amber-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" value="<?php echo populateForm("category_id", $isEditMode, $existingTask) ?>">
+            <option value="" class="text-slate-600"></option>
             <?php foreach ($categories as $category) :  ?>
                 <option value="<?php echo $category["id"] ?>" <?php echo populateFormSelect("category_id", $category["id"], $isEditMode, $existingTask) ?>> <?php echo htmlspecialchars($category["name"]); ?> </option>
             <?php endforeach; ?>
-
-            <!-- echo '<option value=" ' . $category["id"] .'" '. . "holla" . '>' . htmlspecialchars($category["name"]) . '</option>'; -->
-
-
         </select>
 
         <label class="block font-semibold text-slate-700 mb-2">Priority</label>
-        <select name="priority" class="bg-amber-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200">
+        <select name="priority" aria-placeholder="select priority" class="bg-amber-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200">
             <?php ?>
-            <option value="Very High">Very High</option>
-            <option value="High">High</option>
-            <option value="Moderate">Moderate</option>
-            <option value="Low">Low</option>
-            <option value="Very Low">Very Low</option>
+            <option value="" class="text-slate-600"></option>
+            <option value="very-high" <?php echo populateFormSelect("priority", "very-high", $isEditMode, $existingTask) ?>>Very High</option>
+            <option value="high" <?php echo populateFormSelect("priority", "high", $isEditMode, $existingTask) ?>>High</option>
+            <option value="moderate" <?php echo populateFormSelect("priority", "moderate", $isEditMode, $existingTask) ?>>Moderate</option>
+            <option value="low" <?php echo populateFormSelect("priority", "low", $isEditMode, $existingTask) ?>>Low</option>
+            <option value="very-low" <?php echo populateFormSelect("priority", "very-low", $isEditMode, $existingTask) ?>>Very Low</option>
 
         </select>
 

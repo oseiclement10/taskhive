@@ -6,9 +6,21 @@ if (isset($_SESSION["taskFormValues"])) {
     unset($_SESSION["taskFormValues"]);
 }
 
+
 if (isset($_POST["save-task"])) {
-    $taskController = new TaskController($_POST);
-    $taskController->saveNew();
+
+    if ($_POST["form_mode"] == "new") {
+        $taskController = new TaskController($_POST);
+        $taskController->saveNew();
+        return;
+    }
+
+    if ($_POST["form_mode"] == "edit") {
+        $taskController = new TaskController($_POST);
+        $taskController->saveNew();
+        return;
+    }
+
 } else {
     header("Location: ./task/newtask?errors=create new task here");
 }
