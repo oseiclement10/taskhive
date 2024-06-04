@@ -62,6 +62,18 @@ class Task extends DbConnection
         }
     }
 
+    public static function deleteTaskById($taskId)
+    {
+        $query = "DELETE FROM tasks where id = ?";
+        $connector = self::connect()->prepare($query);
+
+        if ($connector->execute([$taskId])) {
+            return true;
+        } else {
+            throw new PDOException("Error deleting user tasks");
+        }
+    }
+
     protected function createNewTask()
     {
         $query = "INSERT INTO tasks (title,user_id,description,start_datetime,due_datetime,category_id,priority,status) values (?,?,?,?,?,?,?,?)";
