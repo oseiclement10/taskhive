@@ -7,6 +7,8 @@ use App\Models\Task;
 use Exception;
 
 const TASKFORMROUTE = "/taskhive/usr/tasks/new";
+const TASKPAGE = "/taskhive/usr/tasks";
+
 class TaskController extends Task
 {
 
@@ -92,6 +94,17 @@ class TaskController extends Task
                 $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
                 header("Location: " . TASKFORMROUTE . "?mode=edit&id=$taskId" . "&errors=$errorMessage");
             }
+        }
+    }
+
+    public static function removeTask($taskId)
+    {
+        try {
+            parent::deleteTaskById($taskId);
+            header("Location: " . TASKPAGE . "?success=Removed Task Successfully");
+        } catch (Exception $e) {
+            $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
+            header("Location: " . TASKPAGE . "?errors=$errorMessage");
         }
     }
 }

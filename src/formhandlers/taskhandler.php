@@ -6,9 +6,7 @@ if (isset($_SESSION["taskFormValues"])) {
     unset($_SESSION["taskFormValues"]);
 }
 
-
 if (isset($_POST["save-task"])) {
-
     if ($_POST["form_mode"] == "new") {
         $taskController = new TaskController($_POST);
         $taskController->saveNew();
@@ -20,7 +18,10 @@ if (isset($_POST["save-task"])) {
         $taskController->updateTask($_POST["task_id"]);
         return;
     }
-
+} else if (isset($_POST["delete_task"])) {
+    $taskId = $_GET["id"];
+    TaskController::removeTask($taskId);
+    return;
 } else {
     header("Location: ./task/newtask?errors=create new task here");
 }
