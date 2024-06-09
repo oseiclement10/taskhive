@@ -67,7 +67,7 @@ function getBgColor($prop)
                             </svg>
                         </button>
                         <form name="update_status" method="POST" action="/taskhive/usr/tasks/new" class="toggleContainer absolute hidden top-6 bg-white border-t-2 border-slate-100 flex-col w-fit  py-2 space-y-1 rounded-md shadow-md">
-                            <input type="hidden" name="task_id" value="'.$task["id"].'" />
+                            <input type="hidden" name="task_id" value="' . $task["id"] . '" />
                             <span class="text-slate-600 text-sm text-center font-semibold underline">Mark task as </span>
                             <input name="update_status" type="submit" value="Pending" class=" py-2 px-5  text-sm cursor-pointer text-slate-600  hover:bg-slate-100 hover:text-amber-600 active:opacity-30 "/>
                             <input name="update_status" type="submit" value="Completed" class=" py-2 px-5  text-sm cursor-pointer text-slate-600 hover:bg-slate-100 hover:text-green-600 active:opacity-30 "/>
@@ -123,12 +123,7 @@ function getBgColor($prop)
                     <input type="submit" name="delete_task" value="Yes ! Delete" class="cursor-pointer border px-4 py-1 rounded-md bg-red-600 text-white border-red-600 hover:opacity-80 active:opacity-30" />
                     <input id="closeForm" type="button" value="Cancel" class="cursor-pointer border px-4 py-1  rounded-md  border-slate-300 hover:border-blue-400 hover:opacity-80 active:opacity-30" />
                 </div>
-                <!-- <span class="span bg-white flex flex-col w-fit px-3 py-2 space-y-1 rounded-md shadow-md">
-                    <span class="text-slate-600 text-sm underline">Mark task as </span>
-                    <button class="button py-2 px-2  text-sm cursor-pointer text-amber-600  hover:bg-slate-100  "> Pending</button>
-                    <button class="button py-2 px-2  text-sm cursor-pointer text-green-600 hover:bg-slate-100  "> Completed</button>
-                    <button class="button py-2 px-2  text-sm cursor-pointer text-red-600 hover:bg-slate-100  "> Overdue</button>
-                </span> -->
+
             </form>
 
         </div>
