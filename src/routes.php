@@ -14,6 +14,7 @@ $publicGetRoutes = [
 $protectedGetRoutes = [
     "/usr/dashboard" => VIEWS_DIR . "dashboard.php",
     "/usr/tasks" => VIEWS_DIR . "tasks.php",
+    "/usr/categories" => VIEWS_DIR. "categories.php",
     "/usr/tasks/new" => VIEWS_DIR . "newtask.php",
     "/usr/profile" => VIEWS_DIR . "profile.php",
     "/usr/logout" => VIEWS_DIR . "logout.php",
