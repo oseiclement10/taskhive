@@ -97,7 +97,7 @@ class TaskController extends Task
         }
     }
 
-    public function removeTask($taskId)
+    public static function removeTask($taskId)
     {
         try {
             parent::deleteTaskById($taskId);

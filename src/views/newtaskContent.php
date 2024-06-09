@@ -95,9 +95,9 @@ function populateFormSelect($fieldName, $optionId, $isEditMode, $existingTask)
         </div>
     </form>
     <script>
-        // const notificationsTags = document.getElementsByClassName('notif');
-        // setTimeout(() => {
-        //     Array.from(notificationsTags).forEach(elem => elem.classList.add("hidden"));
-        // }, 5000)
+        const notificationsTags = document.getElementsByClassName('notif');
+        setTimeout(() => {
+            Array.from(notificationsTags).forEach(elem => elem.classList.add("hidden"));
+        }, 5000)
     </script>
 </section>

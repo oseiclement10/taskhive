@@ -18,11 +18,9 @@ if (isset($_POST["save-task"])) {
         $taskController->updateTask($_POST["task_id"]);
         return;
     }
-}
-
-if (isset($_GET["mode"]) && $_GET["mode"] == "delete") {
+} else if (isset($_POST["delete_task"])) {
     $taskId = $_GET["id"];
-    TaskController::deleteTaskById($taskId);
+    TaskController::removeTask($taskId);
     return;
 } else {
     header("Location: ./task/newtask?errors=create new task here");
