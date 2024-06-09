@@ -108,4 +108,14 @@ class Task extends DbConnection
             $taskId,
         ]);
     }
+
+    public static function changeTaskStatus($taskId,$status){
+        $query = "UPDATE tasks set status = ? where id = ?";
+        $connector = self::connect()->prepare($query);
+
+        return $connector->execute([
+            $status,
+            $taskId,
+        ]);
+    }
 }

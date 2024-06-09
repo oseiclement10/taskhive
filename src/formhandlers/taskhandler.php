@@ -22,6 +22,10 @@ if (isset($_POST["save-task"])) {
     $taskId = $_GET["id"];
     TaskController::removeTask($taskId);
     return;
+} else if (isset($_POST["update_status"])) {
+    $taskId = $_POST["task_id"];
+    $status = $_POST["update_status"];
+    TaskController::updateTaskStatus($taskId, $status);
 } else {
     header("Location: ./task/newtask?errors=create new task here");
 }

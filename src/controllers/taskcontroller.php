@@ -107,4 +107,15 @@ class TaskController extends Task
             header("Location: " . TASKPAGE . "?errors=$errorMessage");
         }
     }
+
+    public static function updateTaskStatus($taskId, $status)
+    {
+        try {
+            parent::changeTaskStatus($taskId, $status);
+            header("Location: " . TASKPAGE . "?success=Updated Status successfully");
+        } catch (Exception $e) {
+            $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
+            header("Location: " . TASKPAGE . "?erros=$errorMessage");
+        }
+    }
 }
