@@ -26,7 +26,8 @@ $publicPostRoutes = [
 ];
 
 $protectedPostRoutes = [
-    "/usr/tasks/new" => FORM_HANDLERS_DIR . "taskhandler.php"
+    "/usr/tasks/new" => FORM_HANDLERS_DIR . "taskhandler.php",
+    "/usr/category/new" => FORM_HANDLERS_DIR . "categoryhandler.php",
 ];
 
 

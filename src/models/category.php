@@ -19,6 +19,26 @@ class Category  extends DbConnection
         $this->user_id = $_SESSION["uid"];
     }
 
+    public function saveCategory()
+    {
+        $query = "INSERT into CATEGORIES (name) values ?";
+        $connector = parent::connect()->prepare($query);
+
+        return $connector->execute([
+            $this->name
+        ]);
+    }
+
+    public function updateCategory($categoryId)
+    {
+        $query = "UPDATE CATEGORIES SET name = ? where id = ?";
+        $connector = parent::connect()->prepare($query);
+        return $connector->execute([
+            $this->name,
+            $categoryId
+        ]);
+    }
+
     public static function fetchUserCategories()
     {
         $query = "SELECT * FROM categories where user_id = ?";
