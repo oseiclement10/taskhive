@@ -6,12 +6,15 @@ use PDOException;
 
 class User extends DbConnection
 {
+    protected $username;
     protected $email;
     protected $password;
     protected $password_confirmation;
 
-    public function __construct($email, $password, $password_confirmation)
+
+    public function __construct($username, $email, $password, $password_confirmation)
     {
+        $this->username = $username;
         $this->email = $email;
         $this->password = $password;
         $this->password_confirmation = $password_confirmation;
@@ -33,12 +36,12 @@ class User extends DbConnection
         }
     }
 
-    public function saveNewUser($email, $password)
+    public function saveNewUser($passwordHash)
     {
         try {
-            $query = "INSERT into users (email,password) values (?, ?)";
+            $query = "INSERT into users (username,email,password) values (?,?, ?)";
             $connector = self::connect()->prepare($query);
-            return $connector->execute([$email, $password]);
+            return $connector->execute([$this->username, $this->email, $passwordHash]);
         } catch (PDOException $err) {
             throw new PDOException($err);
         }

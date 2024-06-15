@@ -31,9 +31,12 @@ function getFormValue($valName)
                     ?>
                 </div>
 
+
                 <label class="block font-semibold text-slate-700 mb-2">Your email</label>
                 <input required type="email" class="bg-slate-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" placeholder="enter email" name="email" value="<?php echo getFormValue("email") ?>" />
 
+                <label class="block font-semibold text-slate-700 mb-2">Your Username</label>
+                <input required type="text" class="bg-slate-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" placeholder="enter username" name="username" value="<?php echo getFormValue("username") ?>" />
 
                 <label class="block font-semibold text-slate-700 mb-2">Password</label>
                 <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-4">

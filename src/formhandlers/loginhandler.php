@@ -12,8 +12,8 @@ if (isset($_POST["login"])) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $userController = new UserController($email, $password, "");
+    $userController = new UserController("", $email, $password, "");
     $userController->loginUser();
-}else{
+} else {
     header("Location: ./login?errors=login here");
 }

@@ -8,9 +8,9 @@ use Exception;
 class UserController extends User
 {
 
-    public function __construct($email, $password, $password_confirmation)
+    public function __construct($username, $email, $password, $password_confirmation)
     {
-        parent::__construct($email, $password, $password_confirmation);
+        parent::__construct($username, $email, $password, $password_confirmation);
     }
 
     public function registerUser()
@@ -19,6 +19,7 @@ class UserController extends User
         if (count($errors) > 0) {
             session_start();
             $_SESSION["regisFormValues"] = [
+                "username" => $this->username,
                 "email" => $this->email,
                 "password" => $this->password,
                 "password_confirmation" => $this->password_confirmation,
@@ -28,7 +29,7 @@ class UserController extends User
         } else {
             $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
             try {
-                $this->saveNewUser($this->email, $hashedPassword);
+                $this->saveNewUser($hashedPassword);
                 header("Location: ./login");
             } catch (Exception $err) {
                 session_start();
@@ -63,6 +64,7 @@ class UserController extends User
                     session_start();
                     $_SESSION["uid"] = $user["id"];
                     $_SESSION["email"] = $user["email"];
+                    $_SESSION["username"] = $user["username"];
                     header("Location: ./usr/dashboard");
                 } else {
                     header("Location: ./login?errors=invalid credentials");
@@ -75,7 +77,9 @@ class UserController extends User
     {
         $errors = [];
 
-
+        if(empty($this->username)){
+            array_push($errors, "username is required");
+        }    
 
         if (empty($this->password)) {
             array_push($errors, "password is required");
