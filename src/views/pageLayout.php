@@ -59,7 +59,7 @@ function matchesUrlEndPath($endPath)
         <header class="rounded-3xl px-10 flex items-center justify-between py-4 shadow-sm bg-white w-[98%] mx-auto my-3">
             <h2 class="text-xl ">Welcome <?php echo $_SESSION["username"]; ?> </h2>
             <div class=" text-lg text-white font-semibold w-8 h-8 bg-amber-500 text-center flex items-center justify-center rounded-full">
-                wj
+                <?php echo substr($_SESSION["username"],0,2) ?>
             </div>
         </header>
 
