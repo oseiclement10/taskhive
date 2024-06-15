@@ -34,7 +34,7 @@ class Category  extends DbConnection
     {
         $query = "DELETE FROM CATEGORIES WHERE id = ?";
         $connector = parent::connect()->prepare($query);
-        $connector->execute([$id]);
+        return  $connector->execute([$id]);
     }
 
     public function updateCategory($categoryId)
