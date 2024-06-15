@@ -18,8 +18,21 @@ if ($isFormOpen) {
 ?>
 
 <section>
-    <h3 class="font-semibold text-2xl"> Your Categories</h3>
-    <div class="flex items-end justify-end   mb-8 lg:w-5/6">
+    <h3 class="font-semibold text-2xl mb-4"> Your Categories</h3>
+    <div class="mb-4 ">
+        <?php
+        if (isset($_GET["errors"])) {
+            $errorsArr = explode("_", $_GET["errors"]);
+            foreach ($errorsArr as $error) {
+                echo "<p  class='notif bg-red-100 text-red-500 py-1 px-2 my-2 rounded-md'> $error </p>";
+            }
+        } else if (isset($_GET["success"])) {
+            echo "<p  class='notif bg-emerald-100 py-2 px-4 my-2 rounded-md text-green-600 lg:w-1/2'>" . $_GET["success"] . "</p>";
+        }
+        ?>
+    </div>
+
+    <div class="flex items-end justify-end   mb-4 lg:w-[90%]">
         <button id="addCategory" class="bg-amber-500 flex items-center text-white text-center rounded-md px-3 py-1 hover:opacity-80 active:opacity-30">
             <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
@@ -63,9 +76,20 @@ if ($isFormOpen) {
         </div>
 
         <div class=" bg-white  rounded-2xl p-8 w-[450px] relative transition-all ease-in-out duration-150">
+            <div class="mb-6 ">
+                <?php
+                if (isset($_GET["errors"])) {
+                    $errorsArr = explode("_", $_GET["errors"]);
+                    foreach ($errorsArr as $error) {
+                        echo "<p  class='notif bg-red-100 text-red-500 py-1 px-2 my-2 rounded-md'> $error </p>";
+                    }
+                }
+                ?>
+            </div>
+
             <form name="category" method="POST" action="/taskhive/usr/category/form?mode=new" id="categoryForm">
                 <h4 id="formCaption" class="text-lg text-center font-semibold mb-4 text-slate-800 ">ADD NEW CATEGORY</h4>
-                <input required type="text" id="categoryInput" class="bg-amber-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" placeholder="enter new category" name="category" value="" />
+                <input required type="text" placeholder="enter new category" name="name" value="" id="categoryInput" class="bg-amber-50 px-4 py-2 block w-full mb-6 rounded-md border-[1px] border-slate-200" />
                 <div class="flex items-center justify-center space-x-3 my-4">
                     <input type="submit" name="save-category" value="Save Category" class="cursor-pointer  px-4 py-1 rounded-md bg-amber-500 text-white  hover:opacity-80 active:opacity-30" />
                     <input id="closeForm" type="button" value="Cancel" class="cursor-pointer border px-4 py-1  rounded-md  border-slate-300 hover:border-blue-400 hover:opacity-80 active:opacity-30" />
@@ -114,7 +138,7 @@ if ($isFormOpen) {
             const categoryId = elem.dataset["categoryid"];
             const categoryName = elem.dataset["categoryname"];
 
-         
+
             form.action = form.action.replace("new", `edit&category_id=${categoryId}`);
             formCaption.innerText = "EDIT CATEGORY";
 
@@ -125,6 +149,10 @@ if ($isFormOpen) {
             modalOverlay.classList.toggle("flex");
 
         })
-
     })
+
+    const notificationsTags = document.getElementsByClassName('notif');
+    setTimeout(() => {
+        Array.from(notificationsTags).forEach(elem => elem.classList.add("hidden"));
+    }, 5000)
 </script>

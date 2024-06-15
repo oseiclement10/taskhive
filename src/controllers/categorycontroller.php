@@ -3,9 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\Category;
+use Exception;
 
-const CATEGORYFORMPAGE = "/taskhive/usr/category?status=openForm";
-const CATEGORYPAGE = "/taskhive/usr/category";
+const CATEGORYFORMPAGE = "/taskhive/usr/categories?status=openForm";
+const CATEGORYPAGE = "/taskhive/usr/categories";
 
 class CategoryController extends Category
 {
@@ -25,10 +26,15 @@ class CategoryController extends Category
             $_SESSION["categoryFormValues"] = [
                 "name" => $this->name
             ];
-            header("Location :" . CATEGORYFORMPAGE . "?errors=category name is required");
+            header("Location: " . CATEGORYFORMPAGE . "&errors=category name is required");
         } else {
-            $this->saveCategory();
-            header("Location :" . CATEGORYPAGE . "?success=created new category");
+            try {
+                $this->saveCategory();
+                header("Location: " . CATEGORYPAGE . "?success=saved category successfully");
+            } catch (Exception $e) {
+                $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
+                header("Location: " . CATEGORYFORMPAGE . "&errors=$errorMessage");
+            }
         }
     }
 
@@ -38,10 +44,26 @@ class CategoryController extends Category
             $_SESSION["categoryFormValues"] = [
                 "name" => $this->name
             ];
-            header("Location :" . CATEGORYFORMPAGE . "?mode=edit&id=$categoryId&errors=category name is required");
+            header("Location: " . CATEGORYFORMPAGE . "?mode=edit&id=$categoryId&errors=category name is required");
         } else {
-            $this->updateCategory($categoryId);
-            header("Location :" . CATEGORYPAGE . "?success=updated category");
+            try {
+                $this->updateCategory($categoryId);
+                header("Location: " . CATEGORYPAGE . "?success=updated category");
+            } catch (Exception $e) {
+                $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
+                header("Location: " . CATEGORYFORMPAGE . "?errors=$errorMessage");
+            }
+        }
+    }
+
+    public static function removeCategory($categoryId)
+    {
+        try {
+            parent::deleteCategory($categoryId);
+            header("Location: " . CATEGORYPAGE . "?success=deleted category");
+        } catch (Exception $e) {
+            $errorMessage = str_replace(["\r", "\n"], "", $e->getMessage());
+            header("Location: " . CATEGORYPAGE . "?errors=$errorMessage");
         }
     }
 }

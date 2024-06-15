@@ -21,12 +21,20 @@ class Category  extends DbConnection
 
     public function saveCategory()
     {
-        $query = "INSERT into CATEGORIES (name) values ?";
+        $query = "INSERT into CATEGORIES (name,user_id) values (?,?)";
         $connector = parent::connect()->prepare($query);
 
         return $connector->execute([
-            $this->name
+            $this->name,
+            $_SESSION["uid"],
         ]);
+    }
+
+    public static function deleteCategory($id)
+    {
+        $query = "DELETE FROM CATEGORIES WHERE id = ?";
+        $connector = parent::connect()->prepare($query);
+        $connector->execute([$id]);
     }
 
     public function updateCategory($categoryId)

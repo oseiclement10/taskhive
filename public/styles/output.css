@@ -1434,6 +1434,18 @@ video {
     width: 92%;
   }
 
+  .lg\:w-full {
+    width: 100%;
+  }
+
+  .lg\:w-\[94\%\] {
+    width: 94%;
+  }
+
+  .lg\:w-\[90\%\] {
+    width: 90%;
+  }
+
   .lg\:max-w-\[500px\] {
     max-width: 500px;
   }
