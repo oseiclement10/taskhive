@@ -38,11 +38,11 @@ class User extends DbConnection
 
     public function changeUserInfo()
     {
-        $query = "UPDATE USERS set username = ? and email = ? where id = ?";
+        $query = "UPDATE USERS set username = ?, email = ? where id = ?";
         $connector = parent::connect()->prepare($query);
         return $connector->execute([
             $this->username,
-            $this->password,
+            $this->email,
             $_SESSION["uid"]
         ]);
     }

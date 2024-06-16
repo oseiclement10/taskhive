@@ -103,18 +103,23 @@ class UserController extends User
 
     public static function updateUserPassword($oldPassword, $newPassword, $confirmPassword)
     {
-        //perform missing fields validation and confirm password validation.
-
-        $user = parent::findUserByEmail($_SESSION["email"]);
-
-        if (password_verify($oldPassword, $user["password"])) {
-            $passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
-            try {
-                parent::changeUserPassword($passwordHash);
-                header("Location: " . USERPROFILEPAGE . "?success=changed password successfully");
-            } catch (Exception $err) {
-                $errorMessage = str_replace(["\r", "\n"], "", $err->getMessage());
-                header("Location: " . USERPROFILEPAGE . "?errors=$errorMessage");
+        $errors = self::validatePasswordFields($oldPassword, $newPassword, $confirmPassword);
+        if (count($errors) > 0) {
+            $errorStr = implode("_", $errors);
+            header("Location: " . USERPROFILEPAGE . "?errors=$errorStr");
+        } else {
+            $user = parent::findUserByEmail($_SESSION["email"]);
+            if (password_verify($oldPassword, $user["password"])) {
+                $passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+                try {
+                    parent::changeUserPassword($passwordHash);
+                    header("Location: " . USERPROFILEPAGE . "?success=changed password successfully");
+                } catch (Exception $err) {
+                    $errorMessage = str_replace(["\r", "\n"], "", $err->getMessage());
+                    header("Location: " . USERPROFILEPAGE . "?errors=$errorMessage");
+                }
+            } else {
+                header("Location: " . USERPROFILEPAGE . "?errors= incorrect current password");
             }
         }
     }
@@ -160,6 +165,30 @@ class UserController extends User
             array_push($errors, "Email already taken");
         }
 
+        return $errors;
+    }
+
+    public static function validatePasswordFields($oldPassword, $newPassword, $confirmPassword)
+    {
+        $errors = [];
+
+        if (empty($oldPassword)) {
+            array_push($errors, "current password is required");
+        };
+
+
+        if (empty($newPassword)) {
+            array_push($errors, "new password is required");
+        };
+
+        if (empty($confirmPassword)) {
+            array_push($errors, "confirm password is required");
+        };
+
+
+        if ($newPassword != $confirmPassword) {
+            array_push($errors, "Passwords do not match");
+        }
         return $errors;
     }
 

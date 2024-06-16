@@ -14,7 +14,7 @@ $publicGetRoutes = [
 $protectedGetRoutes = [
     "/usr/dashboard" => VIEWS_DIR . "dashboard.php",
     "/usr/tasks" => VIEWS_DIR . "tasks.php",
-    "/usr/categories" => VIEWS_DIR. "categories.php",
+    "/usr/categories" => VIEWS_DIR . "categories.php",
     "/usr/tasks/new" => VIEWS_DIR . "newtask.php",
     "/usr/profile" => VIEWS_DIR . "profile.php",
     "/usr/logout" => VIEWS_DIR . "logout.php",
@@ -28,6 +28,7 @@ $publicPostRoutes = [
 $protectedPostRoutes = [
     "/usr/tasks/new" => FORM_HANDLERS_DIR . "taskhandler.php",
     "/usr/category/form" => FORM_HANDLERS_DIR . "categoryhandler.php",
+    "/usr/info/form" => FORM_HANDLERS_DIR . "userinfohandler.php",
 ];
 
 
@@ -69,7 +70,7 @@ function handleRoutes($requestMethod, $path, $getRoutes, $postRoutes, $isProtect
             handleNotFound($isProtected);
             return;
         }
-    } else if ($requestMethod == "POST" ) {
+    } else if ($requestMethod == "POST") {
         if (array_key_exists($path, $postRoutes)) {
             require $postRoutes[$path];
             return;

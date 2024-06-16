@@ -1,4 +1,17 @@
 <section>
+    <div class="mb-4 ">
+        <?php
+        if (isset($_GET["errors"])) {
+            $errorsArr = explode("_", $_GET["errors"]);
+            foreach ($errorsArr as $error) {
+                echo "<p  class='notif bg-red-100 text-red-500 py-1 px-2 my-2 rounded-md'> $error </p>";
+            }
+        } else if (isset($_GET["success"])) {
+            echo "<p  class='notif bg-emerald-100 py-2 px-4 my-2 rounded-md text-green-600 lg:w-1/2'>" . $_GET["success"] . "</p>";
+        }
+        ?>
+    </div>
+
     <h3 class="text-lg font-semibold text-slate-800 mb-3 pb-1 border-b border-slate-200 lg:w-4/6"> Manage your profile here</h3>
     <h4 class="text-gray-600">username</h4>
     <p class="mb-2 font-semibold text-slate-800"><?php echo $_SESSION["username"] ?></p>
@@ -31,29 +44,31 @@
         </div>
 
         <div class=" bg-white  rounded-2xl p-8 w-[450px] relative transition-all ease-in-out duration-150">
-            <form name="userinfo" method="POST" action="" id="editUserInfo">
+            <!-- BASIC INFO CHANGE -->
+            <form name="userinfo" method="POST" action="/taskhive/usr/info/form" id="editUserInfo">
                 <h4 id="formCaption" class="text-lg text-center font-semibold mb-4 text-slate-800 ">EDIT YOUR ACCOUNT INFO</h4>
                 <label class="block font-semibold text-slate-700 mb-2">Username</label>
-                <input required id="password" type="username" class="bg-transparent mb-4 px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="password" value="" />
+                <input required placeholder="new user name" name="username" value="" id="username" type="text" class="bg-slate-100 mb-4 px-4 outline-none  block w-full py-2  rounded-md " />
 
 
                 <label class="block font-semibold text-slate-700 mb-2">Email</label>
-                <input required id="password" type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="password" value="" />
+                <input placeholder="change email" name="email" value="" required id="email" type="email" class="bg-slate-100 px-4 outline-none  block w-full py-2  rounded-md " />
 
                 <div class="flex items-center justify-center space-x-3 mt-6 mb-2">
-                    <input type="submit" name="save-category" value="Save Changes" class="cursor-pointer  px-4 py-1 rounded-md bg-amber-500 text-white  hover:opacity-80 active:opacity-30" />
+                    <input type="submit" name="updateUserInfo" value="Save Changes" class="cursor-pointer  px-4 py-1 rounded-md bg-amber-500 text-white  hover:opacity-80 active:opacity-30" />
                     <input type="button" value="Cancel" class="closeForm cursor-pointer border px-4 py-1  rounded-md  border-slate-300 hover:border-blue-400 hover:opacity-80 active:opacity-30" />
                 </div>
 
             </form>
 
-            <form name="changepassword" method="POST" action="" id="changePassword">
+            <!-- PASSWORD CHANGE -->
+            <form name="changepassword" method="POST" action="/taskhive/usr/info/form" id="changePassword">
                 <h4 class="text-lg font-semibold mb-2 text-slate-800 text-center">CHANGE PASSWORD</h4>
 
-                <label class="block font-semibold text-slate-700 mb-2">Old Password</label>
+                <label class="block font-semibold text-slate-700 mb-2">Current Password</label>
                 <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-4">
-                    <input required id="password" type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="password" class="block" value="" />
-                    <button class="px-2" type="button" id="showpassword">
+                    <input required  type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter  current password" name="old_password" class="block" value="" />
+                    <button class="px-2 showPassword" type="button" >
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
                             <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -69,9 +84,9 @@
 
 
                 <label class="block font-semibold text-slate-700 mb-2">New Password</label>
-                <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-8">
-                    <input id="confirmpassword" required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="password_confirmation" class="block" value="" />
-                    <button class="px-2" type="button" id="showpassword2">
+                <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-4">
+                    <input id="confirmpassword" required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter new password" name="new_password" class="block" value="" />
+                    <button class="px-2 showPassword" type="button"  >
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
                             <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -89,8 +104,8 @@
 
                 <label class="block font-semibold text-slate-700 mb-2">Confirm Password</label>
                 <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-8">
-                    <input id="confirmpassword" required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter password" name="password_confirmation" class="block" value="" />
-                    <button class="px-2" type="button" id="showpassword2">
+                    <input id="confirmpassword" required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="confirm new password" name="confirm_password" class="block" value="" />
+                    <button class="px-2 showPassword" type="button" >
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
                             <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -107,7 +122,7 @@
                 </div>
 
                 <div class="flex items-center justify-center space-x-3 my-4">
-                    <input type="submit" name="save-category" value="Save New Password" class="cursor-pointer  px-4 py-1 rounded-md bg-amber-500 text-white  hover:opacity-80 active:opacity-30" />
+                    <input type="submit" name="changePassword" value="Save New Password" class="cursor-pointer  px-4 py-1 rounded-md bg-amber-500 text-white  hover:opacity-80 active:opacity-30" />
                     <input type="button" value="Cancel" class="closeForm cursor-pointer border px-4 py-1  rounded-md  border-slate-300 hover:border-blue-400 hover:opacity-80 active:opacity-30" />
                 </div>
             </form>
@@ -129,6 +144,29 @@
     const editInfoTrigger = document.getElementById("openEditForm");
 
     const closeFormTriggers = document.getElementsByClassName("closeForm");
+
+    const showPasswords = document.getElementsByClassName("showPassword");
+
+    function togglePasswordVisibility(trigger) {
+        
+        const parent = trigger.parentElement;
+        const input = parent.children[0];
+
+        if (input.type === "password") {
+            input.type = "text";
+        } else {
+            input.type = "password";
+        }
+        trigger.firstElementChild.classList.toggle("hidden");
+        trigger.children[1].classList.toggle("hidden");
+    }
+
+
+    Array.from(showPasswords).forEach(elem=>{
+         elem.addEventListener("click",(e)=>{
+            togglePasswordVisibility(elem);
+         })
+    })
 
 
     Array.from(closeFormTriggers).forEach(elem => {

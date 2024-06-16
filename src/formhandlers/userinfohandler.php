@@ -7,15 +7,17 @@ if (isset($_SESSION["userInfoForm"])) {
 }
 
 if (isset($_POST["updateUserInfo"])) {
-    $username = $_POST["userinfo"];
+    $username = $_POST["username"];
     $email = $_POST["email"];
 
     $user = new UserController($username, $email, "", "");
     $user->updateUserInfo();
 } else if (isset($_POST["changePassword"])) {
-    $oldPassword = $_POST["old-password"];
-    $newPassword = $_POST["new-password"];
+    $oldPassword = $_POST["old_password"];
+    $newPassword = $_POST["new_password"];
     $confirmPassword = $_POST["confirm_password"];
 
-    UserController::changeUserPassword($oldPassword, $newPassword, $confirmPassword);
+    UserController::updateUserPassword($oldPassword, $newPassword, $confirmPassword);
+} else {
+    header("Location: /taskhive/usr/profile");
 }
