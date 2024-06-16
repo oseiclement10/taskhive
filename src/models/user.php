@@ -20,7 +20,7 @@ class User extends DbConnection
         $this->password_confirmation = $password_confirmation;
     }
 
-    public function findUserByEmail($email)
+    public static function findUserByEmail($email)
     {
         try {
             $query = "SELECT * FROM users where email = ? ";
@@ -34,6 +34,27 @@ class User extends DbConnection
         } catch (PDOException $er) {
             return false;
         }
+    }
+
+    public function changeUserInfo()
+    {
+        $query = "UPDATE USERS set username = ? and email = ? where id = ?";
+        $connector = parent::connect()->prepare($query);
+        return $connector->execute([
+            $this->username,
+            $this->password,
+            $_SESSION["uid"]
+        ]);
+    }
+
+    public static function changeUserPassword($newPasswordHash){
+        $query = "UPDATE USERS set password = ? where id = ? ";
+        $connector = parent::connect()->prepare($query);
+
+        return $connector->execute([
+            $newPasswordHash,
+            $_SESSION["uid"]
+        ]);
     }
 
     public function saveNewUser($passwordHash)

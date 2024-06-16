@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\User;
 use Exception;
 
+define("USERPROFILEPAGE", "/taskhive/usr/profile");
+
 class UserController extends User
 {
 
@@ -56,7 +58,7 @@ class UserController extends User
             $errorStr = implode("_", $errors);
             header("Location: ./login?errors=$errorStr");
         } else {
-            $user = $this->findUserByEmail($this->email);
+            $user = parent::findUserByEmail($this->email);
             if (!$user) {
                 header("Location: ./login?errors=invalid credentials");
             } else {
@@ -73,13 +75,70 @@ class UserController extends User
         }
     }
 
+    public function updateUserInfo()
+    {
+        $errors = $this->validateUserInfo();
+        if (count($errors) > 0) {
+            session_start();
+            $_SESSION["userInfoForm"] = [
+                "email" => $this->email,
+                "username" => $this->username,
+            ];
+            $errorStr = implode("_", $errors);
+            header("Location: /taskhive/usr/profile?errors=$errorStr");
+        } else {
+            try {
+                $this->changeUserInfo();
+                header("Location: /taskhive/usr/profile?success=info changed successfully");
+            } catch (Exception $err) {
+                $_SESSION["userInfoForm"] = [
+                    "email" => $this->email,
+                    "username" => $this->username,
+                ];
+                $errorMessage = str_replace(["\r", "\n"], "", $err->getMessage());
+                header("Location: ./taskhive/usr/profile?errors=$errorMessage");
+            }
+        }
+    }
+
+    public static function updateUserPassword($oldPassword, $newPassword, $confirmPassword)
+    {
+        //perform missing fields validation and confirm password validation.
+
+        $user = parent::findUserByEmail($_SESSION["email"]);
+
+        if (password_verify($oldPassword, $user["password"])) {
+            $passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+            try {
+                parent::changeUserPassword($passwordHash);
+                header("Location: " . USERPROFILEPAGE . "?success=changed password successfully");
+            } catch (Exception $err) {
+                $errorMessage = str_replace(["\r", "\n"], "", $err->getMessage());
+                header("Location: " . USERPROFILEPAGE . "?errors=$errorMessage");
+            }
+        }
+    }
+
+    public function validateUserInfo()
+    {
+        $errors = [];
+
+        if (empty($this->username)) {
+            array_push($errors, "username is required");
+        }
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            array_push($errors, "Email provided is not a valid email");
+        }
+        return $errors;
+    }
+
     public function validateRegisterCreds()
     {
         $errors = [];
 
-        if(empty($this->username)){
+        if (empty($this->username)) {
             array_push($errors, "username is required");
-        }    
+        }
 
         if (empty($this->password)) {
             array_push($errors, "password is required");
