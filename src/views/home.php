@@ -10,11 +10,11 @@ require "header.php";
             <h4 class="text-4xl rounded-tr-3xl rounded-bl-3xl px-2 py-1 bg-black text-white w-fit font-extrabold">T <span class="text-base -ml-2  bg-white text-black px-1">h</span></h4>
 
             <div class="flex items-center space-x-2">
-                <a href="./login" class="border-[2px]  border-black text-black  px-6 py-2  rounded-3xl text-center">
+                <a href="./login" class="border-[2px]  border-black text-black  px-6 py-2  rounded-3xl text-center hover:bg-amber-100 hover:border-amber-200 active:opacity-30">
                     Log in
                 </a>
 
-                <a href="./signup" class="text-white bg-black px-6 py-2  rounded-3xl text-center">
+                <a href="./signup" class="text-white bg-black px-6 py-2 border-[2px] border-transparent rounded-3xl text-center hover:bg-amber-100 hover:text-slate-800 hover:border-amber-200 ">
                     Sign up
                 </a>
             </div>
@@ -27,12 +27,12 @@ require "header.php";
             </h1>
 
             <p class="w-4/6 text-center  text-slate-600 mb-8">
-                Whether you're managing personal projects or collaborating with a team, Task Hive empowers you to achieve your goals efficiently. Experience seamless task organization and enhanced productivity with Task Hive today.
+                Whether you're managing personal projects or striving to achieve your goals independently, Task Hive empowers you to work efficiently. Experience seamless task organization and enhanced productivity with Task Hive today.
             </p>
             <div class="flex items-center">
                 <img src="<?php echo $filePath ?>/assets/tasklist.png" alt="task hive" class="w-[300px] mb-4" />
 
-                <button class="bg-black rounded-tr-3xl rounded-br-3xl text-white px-6 py-2 text-lg ">Get Started ->></button>
+                <a href="./login" class="bg-black rounded-tr-3xl border-[2px] border-transparent rounded-br-3xl text-white px-6 py-2 text-lg transition-all ease-in-out duration-150 hover:shadow-md hover:translate-x-2 hover:bg-amber-100 hover:text-black hover:border-amber-300 active:opacity-10">Get Started ->></a>
             </div>
 
         </section>

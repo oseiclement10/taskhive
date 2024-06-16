@@ -1,5 +1,8 @@
 <section>
-    <div class="mb-4 ">
+
+
+    <h3 class="text-2xl font-semibold text-slate-800 mb-2 pb-1 border-b border-slate-200 lg:w-4/6"> Manage your profile here</h3>
+    <div class="mb-3 ">
         <?php
         if (isset($_GET["errors"])) {
             $errorsArr = explode("_", $_GET["errors"]);
@@ -12,7 +15,6 @@
         ?>
     </div>
 
-    <h3 class="text-lg font-semibold text-slate-800 mb-3 pb-1 border-b border-slate-200 lg:w-4/6"> Manage your profile here</h3>
     <h4 class="text-gray-600">username</h4>
     <p class="mb-2 font-semibold text-slate-800"><?php echo $_SESSION["username"] ?></p>
 
@@ -67,8 +69,8 @@
 
                 <label class="block font-semibold text-slate-700 mb-2">Current Password</label>
                 <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-4">
-                    <input required  type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter  current password" name="old_password" class="block" value="" />
-                    <button class="px-2 showPassword" type="button" >
+                    <input required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter  current password" name="old_password" class="block" value="" />
+                    <button class="px-2 showPassword" type="button">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
                             <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -86,7 +88,7 @@
                 <label class="block font-semibold text-slate-700 mb-2">New Password</label>
                 <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-4">
                     <input id="confirmpassword" required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="enter new password" name="new_password" class="block" value="" />
-                    <button class="px-2 showPassword" type="button"  >
+                    <button class="px-2 showPassword" type="button">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
                             <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -105,7 +107,7 @@
                 <label class="block font-semibold text-slate-700 mb-2">Confirm Password</label>
                 <div class="flex items-center justify-between bg-slate-50 rounded-md border-[1px] border-slate-200 mb-8">
                     <input id="confirmpassword" required type="password" class="bg-transparent px-4 outline-none  block w-full py-2  rounded-md " placeholder="confirm new password" name="confirm_password" class="block" value="" />
-                    <button class="px-2 showPassword" type="button" >
+                    <button class="px-2 showPassword" type="button">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z" />
                             <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -148,7 +150,7 @@
     const showPasswords = document.getElementsByClassName("showPassword");
 
     function togglePasswordVisibility(trigger) {
-        
+
         const parent = trigger.parentElement;
         const input = parent.children[0];
 
@@ -162,10 +164,10 @@
     }
 
 
-    Array.from(showPasswords).forEach(elem=>{
-         elem.addEventListener("click",(e)=>{
+    Array.from(showPasswords).forEach(elem => {
+        elem.addEventListener("click", (e) => {
             togglePasswordVisibility(elem);
-         })
+        })
     })
 
 
