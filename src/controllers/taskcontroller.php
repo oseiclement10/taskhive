@@ -118,4 +118,18 @@ class TaskController extends Task
             header("Location: " . TASKPAGE . "?erros=$errorMessage");
         }
     }
+
+    public static function getDashboardData()
+    {
+        $results = [];
+        try {
+            $results["today"] = parent::getTasksDueToday();
+            $results["this_week"] = parent::getTasksDueThisWeek();
+            $results["this_month"] = parent::getTasksDueThisMonth();
+            $results["upcoming_tasks"] = parent::getUpcomingTasks();
+            return $results;
+        } catch (Exception $err) {
+            echo $err->getMessage();
+        }
+    }
 }

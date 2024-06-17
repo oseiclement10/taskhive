@@ -5,6 +5,7 @@ namespace App\Models;
 use PDOException;
 use App\Models\Category;
 
+const format = "Y-m-d H:i:s";
 
 class Task extends DbConnection
 {
@@ -109,7 +110,8 @@ class Task extends DbConnection
         ]);
     }
 
-    public static function changeTaskStatus($taskId,$status){
+    public static function changeTaskStatus($taskId, $status)
+    {
         $query = "UPDATE tasks set status = ? where id = ?";
         $connector = self::connect()->prepare($query);
 
@@ -117,5 +119,84 @@ class Task extends DbConnection
             $status,
             $taskId,
         ]);
+    }
+
+    public static function getUpcomingTasks()
+    {
+        $today = date(format, strtotime("today 00:00:00"));
+        $query = "SELECT * FROM tasks where user_id = ? and due_datetime > ? LIMIT 4";
+        $fetchUserTasks = self::connect()->prepare($query);
+
+        if ($fetchUserTasks->execute([$_SESSION["uid"], $today])) {
+            return $fetchUserTasks->fetchAll();
+        } else {
+            throw new PDOException("Error fetching user tasks");
+        }
+    }
+
+    public static function getTasksDueToday()
+    {
+
+        $dawn = date(format, strtotime("today 00:00:00"));
+        $lateNight = date(format, strtotime("today 23:59:59"));
+
+        $query = "SELECT * FROM TASKS where user_id = ? AND due_datetime between ? and ?";
+
+        $connector = parent::connect()->prepare($query);
+
+
+        if ($connector->execute([
+            $_SESSION["uid"],
+            $dawn,
+            $lateNight
+        ])) {
+            return  count($connector->fetchAll());
+        } else {
+            return 0;
+        }
+    }
+
+    public static function getTasksDueThisWeek()
+    {
+
+        $start = date(format, strtotime("monday this week 00:00:00"));
+        $end = date(format, strtotime("sunday this week 23:59:59"));
+
+        $query = "SELECT * FROM TASKS where user_id = ? AND due_datetime between ? and ?";
+
+        $connector = parent::connect()->prepare($query);
+
+
+        if ($connector->execute([
+            $_SESSION["uid"],
+            $start,
+            $end
+        ])) {
+            return  count($connector->fetchAll());
+        } else {
+            return 0;
+        }
+    }
+
+    public static function getTasksDueThisMonth()
+    {
+
+        $start = date(format, strtotime("first day of this month 00:00:00"));
+        $end = date(format, strtotime("last day of this month 23:59:59"));
+
+        $query = "SELECT * FROM TASKS where user_id = ? AND due_datetime between ? and ?";
+
+        $connector = parent::connect()->prepare($query);
+
+
+        if ($connector->execute([
+            $_SESSION["uid"],
+            $start,
+            $end
+        ])) {
+            return  count($connector->fetchAll());
+        } else {
+            return 0;
+        }
     }
 }
