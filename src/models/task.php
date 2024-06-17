@@ -150,7 +150,7 @@ class Task extends DbConnection
             $dawn,
             $lateNight
         ])) {
-            return  count($connector->fetchAll());
+            return  $connector->fetchAll();
         } else {
             return 0;
         }
@@ -172,7 +172,7 @@ class Task extends DbConnection
             $start,
             $end
         ])) {
-            return  count($connector->fetchAll());
+            return  $connector->fetchAll();
         } else {
             return 0;
         }
@@ -194,7 +194,7 @@ class Task extends DbConnection
             $start,
             $end
         ])) {
-            return  count($connector->fetchAll());
+            return  $connector->fetchAll();
         } else {
             return 0;
         }

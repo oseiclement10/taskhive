@@ -119,13 +119,29 @@ class TaskController extends Task
         }
     }
 
+    
     public static function getDashboardData()
     {
+        function countCompleted($arr){
+            return count(array_filter($arr,function($elem){
+                return $elem["status"] == "Completed";
+            }));
+        }
+
         $results = [];
         try {
             $results["today"] = parent::getTasksDueToday();
+            $results["completed_today"] = countCompleted($results["today"]);
+            $results["today"] = count($results["today"]);
+
             $results["this_week"] = parent::getTasksDueThisWeek();
+            $results["completed_this_week"] = countCompleted($results["this_week"]);
+            $results["this_week"] = count($results["this_week"]);
+
             $results["this_month"] = parent::getTasksDueThisMonth();
+            $results["completed_this_month"] = countCompleted($results["this_month"]);
+            $results["this_month"] = count($results["this_month"]);
+
             $results["upcoming_tasks"] = parent::getUpcomingTasks();
             return $results;
         } catch (Exception $err) {

@@ -34,7 +34,6 @@ $day = date('j');
 $dayWithSuffix = getOrdinalSuffix($day);
 $month = date('F');
 
-// var_dump($data);
 ?>
 <section>
     <h2 class="font-semibold text-slate-800 text-2xl flex items-center mb-6 ">
@@ -56,7 +55,7 @@ $month = date('F');
             <h1 class="text-2xl font-semibold text-gray-700 mb-1"><?php echo $data["today"]; ?></h1>
             <div class="flex justify-between items-center">
                 <h2 class="text-slate-800 font-semibold mb-2 ">Due Today</h2>
-                <span class="px-2 text-sm font-semibold py-[1px]  rounded-md bg-emerald-100 flex">2/8 </span>
+                <span class="px-2 text-sm font-semibold py-[1px]  rounded-md bg-emerald-100 flex"> <?php echo $data["completed_today"] . "/" . $data["today"];   ?></span>
             </div>
 
         </div>
@@ -64,7 +63,7 @@ $month = date('F');
             <h1 class="text-2xl font-semibold text-gray-700 mb-1"><?php echo $data["this_week"]; ?></h1>
             <div class="flex justify-between items-center">
                 <h2 class="text-slate-800 font-semibold mb-2">Due This Week</h2>
-                <span class="px-2 text-sm font-semibold py-[1px]  rounded-md bg-amber-100 flex">6/24 </span>
+                <span class="px-2 text-sm font-semibold py-[1px]  rounded-md bg-amber-100 flex"> <?php echo $data["completed_this_week"] . "/" . $data["this_week"];  ?> </span>
             </div>
 
         </div>
@@ -72,7 +71,7 @@ $month = date('F');
             <h1 class="text-2xl font-semibold text-gray-700 mb-1"><?php echo $data["this_month"]; ?></h1>
             <div class="flex justify-between items-center">
                 <h2 class="text-slate-800 font-semibold mb-2">Due This Month</h2>
-                <span class="bg-white/85 shadow-sm text-slate-800 px-2 text-sm font-semibold py-[1px] rounded-md flex">32/112</span>
+                <span class="bg-white/85 shadow-sm text-slate-800 px-2 text-sm font-semibold py-[1px] rounded-md flex"><?php echo $data["completed_this_month"] . "/" . $data["this_month"];  ?></span>
             </div>
 
         </div>
@@ -84,62 +83,19 @@ $month = date('F');
 
     <div class="section grid gap-4 lg:w-[94%] ">
         <?php foreach ($upcomingTasks as $index => $task) { ?>
-            <div class=" py-2 px-3 border-l-4  <?php echo getColorCombination($index)?> ">
+            <div class=" py-2 px-3 border-l-4  <?php echo getColorCombination($index) ?> ">
                 <h2 class="mb-1 text-lg font-semibold text-slate-800"><?php echo $task["title"]; ?></h2>
                 <p class="text-slate-800 text-sm flex items-center">
                     <svg class="w-4 h-4 mr-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
 
-                    due in an Hour
+                    due at <?php echo date("F d, h:i", strtotime($task["due_datetime"]));  ?>
                 </p>
             </div>
 
         <?php } ?>
 
-        <!-- <div class="bg-amber-50 py-2 px-3 border-l-4 border-amber-400">
-            <h2 class="mb-1 text-lg font-semibold text-slate-800">Write Report on Progress</h2>
-            <p class="text-slate-800 text-sm flex items-center">
-                <svg class="w-4 h-4 mr-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-
-                due in an Hour
-            </p>
-        </div>
-
-        <div class="bg-emerald-50 py-2 px-3 border-l-4 border-green-400">
-            <h2 class="mb-1 text-lg font-semibold text-slate-800">Read on Remix</h2>
-            <p class="text-slate-800 text-sm flex items-center">
-                <svg class="w-4 h-4 mr-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-
-                due in 2 Hours
-            </p>
-        </div>
-
-        <div class="bg-slate-100 py-2 px-3 border-l-4 border-slate-600">
-            <h2 class="mb-1 text-lg font-semibold text-slate-800">Review Report </h2>
-            <p class="text-slate-800 text-sm flex items-center">
-                <svg class="w-4 h-4 mr-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-
-                due in 5 Hours
-            </p>
-        </div>
-
-        <div class="bg-gray-100 py-2 px-3 border-l-4 border-gray-600">
-            <h2 class="mb-1 text-lg font-semibold text-slate-800">Go to Gym </h2>
-            <p class="text-slate-800 text-sm flex items-center">
-                <svg class="w-4 h-4 mr-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-
-                due in 5 Hours
-            </p>
-        </div> -->
 
 
     </div>
