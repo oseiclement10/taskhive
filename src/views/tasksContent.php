@@ -31,7 +31,8 @@ function getBgColor($prop)
 ?>
 <section id="taskContentContainer" class="">
     <h3 class="font-semibold text-2xl"> Your Tasks</h3>
-    <div class="flex items-end justify-end w-5/6  mb-6">
+
+    <div class="flex items-end justify-end w-full  mb-6 mt-4  md:w-5/6 md:mt-0">
         <a href="./tasks/new" class="bg-amber-500 flex items-center text-white text-center rounded-md px-3 py-1 hover:opacity-80 active:opacity-30">
             <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5" />
@@ -54,58 +55,53 @@ function getBgColor($prop)
         ?>
     </div>
 
-    <section class="grid grid-cols-3 w-5/6 gap-6">
-        <?php
-        foreach ($userTasks as $task) {
-            echo '
-                <div class="border-[1px]  border-slate-200 rounded-xl px-4 py-3 ">
+    <section class="grid gap-6 md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:w-[94%] lg:gap-6">
+        <?php foreach ($userTasks as $task) { ?>
+            <div class="border-[1px]  border-slate-200 rounded-xl px-4 py-3 ">
                 <div class="flex space-x-1 items-center justify-end">
-                    <span class="relative " title="change status" > 
-                        <button class="toggleStatus"> 
+                    <span class="relative " title="change status">
+                        <button class="toggleStatus">
                             <svg class="w-[26px] h-[26px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2.7" d="M6 12h.01m6 0h.01m5.99 0h.01"/>
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2.7" d="M6 12h.01m6 0h.01m5.99 0h.01" />
                             </svg>
                         </button>
                         <form name="update_status" method="POST" action="/taskhive/usr/tasks/new" class="toggleContainer absolute hidden top-6 bg-white border-t-2 border-slate-100 flex-col w-fit  py-2 space-y-1 rounded-md shadow-md">
-                            <input type="hidden" name="task_id" value="' . $task["id"] . '" />
+                            <input type="hidden" name="task_id" value=" <?php echo $task["id"] ?> " />
                             <span class="text-slate-600 text-sm text-center font-semibold underline">Mark task as </span>
-                            <input name="update_status" type="submit" value="Pending" class=" py-2 px-5  text-sm cursor-pointer text-slate-600  hover:bg-slate-100 hover:text-amber-600 active:opacity-30 "/>
-                            <input name="update_status" type="submit" value="Completed" class=" py-2 px-5  text-sm cursor-pointer text-slate-600 hover:bg-slate-100 hover:text-green-600 active:opacity-30 "/>
-                            <input name="update_status" type="submit" value="Overdue" class=" py-2 px-5  text-sm cursor-pointer text-slate-600 hover:bg-slate-100 hover:text-red-600 active:opacity-30 "/>
+                            <input name="update_status" type="submit" value="Pending" class=" py-2 px-5  text-sm cursor-pointer text-slate-600  hover:bg-slate-100 hover:text-amber-600 active:opacity-30 " />
+                            <input name="update_status" type="submit" value="Completed" class=" py-2 px-5  text-sm cursor-pointer text-slate-600 hover:bg-slate-100 hover:text-green-600 active:opacity-30 " />
+                            <input name="update_status" type="submit" value="Overdue" class=" py-2 px-5  text-sm cursor-pointer text-slate-600 hover:bg-slate-100 hover:text-red-600 active:opacity-30 " />
                         </form>
                     </span>
-                    
-                    
-                    
 
-                    <a title="edit task" href="./tasks/new?mode=edit&id=' . $task["id"] . '">
+
+
+
+                    <a title="edit task" href="./tasks/new?mode=edit&id= <?php echo $task["id"];  ?> ">
                         <svg class="w-5 h-5 text-slate-600 dark:text-white hover:text-green-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                         </svg>
                     </a>
 
-                    <button title="delete" class="openDelete" data-id=' . $task["id"] . '>
+                    <button title="delete" class="openDelete" data-id="<?php echo $task["id"]; ?>">
                         <svg class="w-5 h-5 text-slate-600 dark:text-white  hover:text-red-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                         </svg>
                     </button>
                 </div>
                 <div class=" mb-3 -mt-3">
-                    <h3 class="font-semibold text-lg">' . htmlspecialchars($task["title"]) . '</h3>
-                    <p class="text-slate-700  text-sm">' . htmlspecialchars($task["description"]) . '</p>
+                    <h3 class="font-semibold text-lg"> <?php echo $task["title"] ?></h3>
+                    <p class="text-slate-700  text-sm"><?php echo $task["description"] ?></p>
                 </div>
-                <div class="flex justify-between">
-                    <div class=" space-x-1">
-                        <span class="px-3 rounded-md py-[2px] text-sm ' . getBgColor($task["status"]) . ' ">' . htmlspecialchars($task["status"]) . '</span>
-                        <span class="px-3 rounded-md py-[2px] text-sm ' . getBgColor($task["priority"]) . ' ">' . htmlspecialchars($task["priority"]) . '</span>
+                <div class="flex justify-between flex-wrap text-wrap">
+                    <div class="space-x-1 flex items-center">
+                        <span class="px-3 rounded-md py-[2px] flex text-sm <?php echo getBgColor($task["status"]) ?> "> <?php echo ($task["status"]) ?></span>
+                        <span class="px-3 rounded-md py-[2px] flex text-sm <?php echo getBgColor($task["priority"]) ?> "> <?php echo ($task["priority"]) ?></span>
                     </div>
-                    <span class="text-slate-900 text-sm">' . htmlspecialchars($task["category"]) . '</span>
+                    <span class="text-slate-900 text-sm"> <?php echo $task["category"] ?></span>
                 </div>
-            
-
-            </div>';
-        }
-        ?>
+            </div>
+        <?php } ?>
     </section>
 
     <!-- DELETE TASK MODAL -->
@@ -188,7 +184,7 @@ function getBgColor($prop)
         })
 
         // Remove notifications
-        const notificationsTags = document.getElementsByClassName('notif');
+        const notificationsTags = document.getElementsByClassName(' notif');
         setTimeout(() => {
             Array.from(notificationsTags).forEach(elem => elem.classList.add("hidden"));
         }, 5000)
